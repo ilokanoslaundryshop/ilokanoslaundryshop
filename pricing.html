@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Ilokano's Laundry Shop</title>
+        <link rel="shortcut icon" type="x-icon" href="LOGO.jpg">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Pacifico&display=swap" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet" />
+
+    <style>
+        #pricing a {
+         color: white
+        }
+        h1,p{
+         font-family: 'Oswald', sans-serif;
+         }
+    </style>
+
+    </head>
+
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
+                <div class="container">
+                    <a class="navbar-brand" >Ilokano's Laundry Shop</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="homepage.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="appointment.html">Appointment</a>
+                            </li>
+                            <li id="pricing" class="nav-item">
+                                <a class="nav-link" href="pricing.html">Pricing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="about.html">About</a>
+                            </li>
+                            <li  class="nav-item ">
+                                <a class="nav-link" href="contact.html">Contact Us</a>
+                            </li>                            
+                            <li id="logout" class="nav-item">
+                                <a class="nav-link logout-link" href="#"><i class="fas fa-sign-out-alt"></i> LogOut</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+           
+            <section class="bg-light py-5">
+                <div class="container px-5 my-5">
+                    <div class="text-center mb-5">
+                        <h1 class="fw-bolder">Pay before laundry</h1>
+                        <p class="lead fw-normal text-muted mb-0">With our budget pricing plan</p>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-6 col-xl-4">
+                            <div class="card mb-5 mb-xl-0">
+                                <div class="card-body p-5">
+                                    <div class="small text-uppercase fw-bold">
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        Friendly 
+                                    </div>
+                                    <div class="mb-3">
+                                        <span class="display-4 fw-bold">₱ 30</span>
+                                        <span class="text-muted">/ kilo</span>
+                                    </div>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Free Wifi
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Fully-Air Conditioned Lounge
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Watch thousands of HD Movies
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Play Station Video Games
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-check text-primary"></i>
+                                            Friendly employee/s
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+
+        <script type="module">
+  
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+            import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+            
+            const firebaseConfig = {
+                apiKey: "AIzaSyAQwGVIDyajoCoTAwqoiuti7XNOLSjB4Dc",
+                authDomain: "ilokano-s-laundry-shop.firebaseapp.com",
+                projectId: "ilokano-s-laundry-shop",
+                storageBucket: "ilokano-s-laundry-shop.appspot.com",
+                messagingSenderId: "196446596227",
+                appId: "1:196446596227:web:5e5a6bfec72f404b407fb6",
+                measurementId: "G-EN4123PZX6"
+            };
+            
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth();  
+                document.getElementById("logout").addEventListener("click", function() {
+                    signOut(auth).then(() => {
+                        console.log('Sign-out successful.');
+                        alert('Logging out Successfully');
+                  window.location.href = "index.html";
+                        document.getElementById('logout').style.display = 'none';
+                      }).catch((error) => {			  
+                        console.log('An error happened.');
+                      });		  		  
+                });
+        </script>
+
+    </body>
+</html>
