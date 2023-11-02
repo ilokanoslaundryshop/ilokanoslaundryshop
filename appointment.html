@@ -11,7 +11,6 @@
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    
     <style>
 
         .highlighted {
@@ -109,17 +108,10 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 
-    <script>
-
-        
-
-    </script>
-
 <script type="module">
     
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
-    import { getFirestore, setDoc, addDoc, doc, collection } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
-    
+    import { getFirestore, setDoc, addDoc, doc, collection, query, where, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
     
     const firebaseConfig = {
       apiKey: "AIzaSyAgVTkD5pkq3thtOrkqJ_9APQdDGXVFDn4",
@@ -130,7 +122,6 @@
       appId: "1:710162371059:web:6389f202e5e3a6c7c60286"
     };
   
-    
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
@@ -142,7 +133,6 @@
                     right: 'month,agendaWeek,agendaDay'
                 },
                 defaultView: 'month',
-                editable: true,
                 events: [],
                 dayClick: function (date) {
                     $('#noteDate').val(date.format('YYYY-MM-DD'));
@@ -152,73 +142,49 @@
                 },
                 eventRender: function(event, element) {
                     if (event.image) {
-                        element.find('.fc-title').append('<br><img src="' + event.image + '" width="30" height="30">');
+                        
                     }
                     element.find('.fc-time').text('');
                 },
                 timeFormat: 'h(:mm)a', 
                 titleFormat: 'MMM D YYYY' 
             })
-            $('#saveNote').on('click', function () {
-                const date = $('#noteDate').val();
-                const time = $('#noteTime').val();
-                const note = $('#noteContent').val();
+             
+    });
 
-                const existingNotes = JSON.parse(localStorage.getItem(date)) || [];
+        $("#saveNote").on("click", function () {
+        const date = $("#noteDate").val();
+        const time = $("#noteTime").val();
+        const note = $("#noteContent").val();
 
-                existingNotes.push({
-                    time: time,
-                    content: note
-                });
+        const appointmentsRef = collection(db, "appointments");
+        const q = query(appointmentsRef, where("Date", "==", date), where("Time", "==", time));
 
-                $('#calendar').fullCalendar('renderEvent', {
-                    title: time + ' - ' + note,
-                    start: date + 'T' + time,
-                    allDay: false, 
-                    className: 'highlighted' 
-                }, true);
-
-                localStorage.setItem(date, JSON.stringify(existingNotes));
-
-                $('#addNoteModal').modal('hide');
-            });
-
-            for (let i = 0; i < localStorage.length; i++) {
-                const date = localStorage.key(i);
-                const existingNotes = JSON.parse(localStorage.getItem(date));
-                if (existingNotes) {
-                    existingNotes.forEach(note => {
-                        $('#calendar').fullCalendar('renderEvent', {
-                            title: note.time + ' - ' + note.content,
-                            start: date + 'T' + note.time,
-                            allDay: false,
-                            className: 'highlighted'
-                        }, true);
-                    });
-                }
-            }
-        });
-
-        $('#saveNote').on('click', function () {
-                const date = $('#noteDate').val();
-                const time = $('#noteTime').val();
-                const note = $('#noteContent').val();
-
-                addDoc(collection(db, "appointments"), {
-                    Date: date,
-                    Time: time,
-                    Note: note
-                })
+        getDocs(q)
+            .then((querySnapshot) => {
+            if (querySnapshot.size === 0) {
+         
+                addDoc(appointmentsRef, {
+                     Date: date,
+                     Time: time,
+                     Note: note,
+            })
                 .then(() => {
-                    alert('Note added');
+                alert("Appointment added");
                 })
                 .catch((error) => {
-                    console.error("Try Again ", error);
+                console.error("Try Again ", error);
                 });
 
-                $('#addNoteModal').modal('hide');
-            });
-
+        $("#addNoteModal").modal("hide");
+        } else {
+          alert("The Date and Time you chose is already exists.");
+        }
+    })
+      .catch((error) => {
+        console.error("Error checking appointment existence: ", error);
+      });
+  });
             const appointmentsRef = collection(db, "appointments");
             onSnapshot(appointmentsRef, (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
@@ -269,5 +235,4 @@
     </script>
 
 </body>
-
 </html>
