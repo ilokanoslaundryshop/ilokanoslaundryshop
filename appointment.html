@@ -111,7 +111,30 @@
 
     <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
+        
+
+    </script>
+
+<script type="module">
+    
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+    import { getFirestore, setDoc, addDoc, doc, collection } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+    
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyAgVTkD5pkq3thtOrkqJ_9APQdDGXVFDn4",
+      authDomain: "appointment-firebase-81f05.firebaseapp.com",
+      projectId: "appointment-firebase-81f05",
+      storageBucket: "appointment-firebase-81f05.appspot.com",
+      messagingSenderId: "710162371059",
+      appId: "1:710162371059:web:6389f202e5e3a6c7c60286"
+    };
+  
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.addEventListener('DOMContentLoaded', function () {
             $('#calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
@@ -176,36 +199,73 @@
             }
         });
 
-    </script>
+        $('#saveNote').on('click', function () {
+                const date = $('#noteDate').val();
+                const time = $('#noteTime').val();
+                const note = $('#noteContent').val();
 
-    <script type="module">
-  
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-        import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyAQwGVIDyajoCoTAwqoiuti7XNOLSjB4Dc",
-            authDomain: "ilokano-s-laundry-shop.firebaseapp.com",
-            projectId: "ilokano-s-laundry-shop",
-            storageBucket: "ilokano-s-laundry-shop.appspot.com",
-            messagingSenderId: "196446596227",
-            appId: "1:196446596227:web:5e5a6bfec72f404b407fb6",
-            measurementId: "G-EN4123PZX6"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth();  
-            document.getElementById("logout").addEventListener("click", function() {
-                signOut(auth).then(() => {
-                    console.log('Sign-out successful.');
-                    alert('Logging out Successfully');
-              window.location.href = "index.html";
-                    document.getElementById('logout').style.display = 'none';
-                  }).catch((error) => {			  
-                    console.log('An error happened.');
-                  });		  		  
+                addDoc(collection(db, "appointments"), {
+                    Date: date,
+                    Time: time,
+                    Note: note
+                })
+                .then(() => {
+                    alert('Note added');
+                })
+                .catch((error) => {
+                    console.error("Try Again ", error);
+                });
+
+                $('#addNoteModal').modal('hide');
             });
 
+            const appointmentsRef = collection(db, "appointments");
+            onSnapshot(appointmentsRef, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        const appointmentData = change.doc.data();
+                        const date = appointmentData.Date;
+                        const time = appointmentData.Time;
+                        const note = appointmentData.Note;
+
+                        $('#calendar').fullCalendar('renderEvent', {
+                            title: time + ' - ' + note,
+                            start: date + 'T' + time,
+                            allDay: false,
+                            className: 'highlighted'
+                        }, true);
+                    }
+                });
+            });
+  </script>
+
+<script type="module">
+  
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    
+    const firebaseAuth = {
+      apiKey: "AIzaSyAQwGVIDyajoCoTAwqoiuti7XNOLSjB4Dc",
+      authDomain: "ilokano-s-laundry-shop.firebaseapp.com",
+      projectId: "ilokano-s-laundry-shop",
+      storageBucket: "ilokano-s-laundry-shop.appspot.com",
+      messagingSenderId: "196446596227",
+      appId: "1:196446596227:web:5e5a6bfec72f404b407fb6",
+      measurementId: "G-EN4123PZX6"
+    };
+    
+    const appp = initializeApp(firebaseAuth);
+    const auth = getAuth();  
+        document.getElementById("logout").addEventListener("click", function() {
+            signOut(auth).then(() => {
+                console.log('Sign-out successful.');
+                alert('Logging out Successfully');
+          window.location.href = "index.html";
+                document.getElementById('logout').style.display = 'none';
+              }).catch((error) => {			  
+                console.log('An error happened.');
+              });		  		  
+        });
     </script>
 
 </body>
