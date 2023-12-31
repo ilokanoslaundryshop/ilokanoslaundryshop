@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Ilokano's Laundry Shop</title>
+        <link rel="shortcut icon" type="x-icon" href="LOGO.jpg">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Oswald&family=Pacifico&display=swap" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet" />
+
+        <script>
+            "use strict";
+            
+            !function() {
+              var t = window.driftt = window.drift = window.driftt || [];
+              if (!t.init) {
+                if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+                t.invoked = !0, t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ], 
+                t.factory = function(e) {
+                  return function() {
+                    var n = Array.prototype.slice.call(arguments);
+                    return n.unshift(e), t.push(n), t;
+                  };
+                }, t.methods.forEach(function(e) {
+                  t[e] = t.factory(e);
+                }), t.load = function(t) {
+                  var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+                  o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+                  var i = document.getElementsByTagName("script")[0];
+                  i.parentNode.insertBefore(o, i);
+                };
+              }
+            }();
+            drift.SNIPPET_VERSION = '0.3.1';
+            drift.load('xtnfpyrynrwm');
+            </script>
+
+    <style>
+        #pricing a {
+         color: white
+        }
+        h1,p,i{
+            font-family: 'Nanum Gothic', sans-serif;
+         }
+       .btn-black {
+        background-color: black;
+         color: white; 
+        }
+
+    </style>
+
+    </head>
+
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
+                <div class="container">
+                    <a class="navbar-brand" >Ilokano's Laundry Shop</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="homepage - Client.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="appointment - Client.html">Appointment</a>
+                            </li>
+                            <li id="pricing" class="nav-item">
+                                <a class="nav-link" href="pricing - Client.html">Pricing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="about - Client.html">About Us</a>
+                            </li>
+                            <li  class="nav-item ">
+                                <a class="nav-link" href="contact - Client.html">Contact Us</a>
+                            </li>                            
+                            <li id="logout" class="nav-item">
+                                <a class="nav-link logout-link" href="#"><i class="fas fa-sign-out-alt"></i> LogOut</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+           
+            <section class="bg-light py-5">
+                <div class="container px-5 my-5">
+                    <div class="text-center mb-5">
+                        <h1 class="fw-bolder">Pay before laundry</h1>
+                        <p class="lead fw-normal text-muted mb-0">With our budget pricing plan</p>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-6 col-xl-4">
+                            <div class="card mb-5 mb-xl-0">
+                                <div class="card-body p-5">
+                                    <div class="small text-uppercase fw-bold">
+                                        Price 
+                                    </div>
+                                    <div class="mb-3">
+                                        <span id="priceDisplay" class="display-4 fw-bold">₱ 30</span>
+                                        <span class="text-muted">/ kilo</span>
+                                    </div>
+                                
+                                    <ul class="list-unstyled mb-4" id="textList">
+                                        <li class="mb-2">
+                                            <i class=></i>
+                                            Clothes Only
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class=></i>
+                                            Minimum of 5 kilos
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class=></i>
+                                            Fully-Air Conditioned Lounge
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class=></i>
+                                            Free Wifi
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class=></i>
+                                            Friendly employee/s
+                                        </li>
+                                    </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="card mb-5 mb-xl-0">
+                            <div class="card-body p-5">
+                                <div class="small text-uppercase fw-bold">
+                                    Price 
+                                </div>
+                                <div class="mb-3">
+                                    <span id="priceDisplay1" class="display-4 fw-bold">₱ 50</span>
+                                    <span class="text-muted">/ kilo</span>
+                                </div>
+                            
+                                <ul class="list-unstyled mb-4" id="textList1">
+                                    <li class="mb-2">
+                                        <i class=></i>
+                                        Beddings, Towel, Curtains, and etc.
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class=></i>
+                                        Minimum of 4 kilos
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class=></i>
+                                        Fully-Air Conditioned Lounge
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class=></i>
+                                        Free Wifi
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class=></i>
+                                        Friendly employee/s
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+      
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+            import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+            import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+        
+            const firebaseConfig = {
+                apiKey: "AIzaSyAgVTkD5pkq3thtOrkqJ_9APQdDGXVFDn4",
+                authDomain: "appointment-firebase-81f05.firebaseapp.com",
+                projectId: "appointment-firebase-81f05",
+                storageBucket: "appointment-firebase-81f05.appspot.com",
+                messagingSenderId: "710162371059",
+                appId: "1:710162371059:web:6389f202e5e3a6c7c60286"
+            };
+
+            const firebaseConfig1 = {
+                apiKey: "AIzaSyAQwGVIDyajoCoTAwqoiuti7XNOLSjB4Dc",
+                authDomain: "ilokano-s-laundry-shop.firebaseapp.com",
+                projectId: "ilokano-s-laundry-shop",
+                storageBucket: "ilokano-s-laundry-shop.appspot.com",
+                messagingSenderId: "196446596227",
+                appId: "1:196446596227:web:5e5a6bfec72f404b407fb6",
+                measurementId: "G-EN4123PZX6"
+            };
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth();  
+                document.getElementById("logout").addEventListener("click", function() {
+                    signOut(auth).then(() => {
+                        console.log('Sign-out successful.');
+                        alert('Logging out Successfully');
+                  window.location.href = "index.html";
+                        document.getElementById('logout').style.display = 'none';
+                      }).catch((error) => {			  
+                        console.log('An error happened.');
+                      });		  		  
+                });
+            const firestore = getFirestore(app);
+        
+            const pricingCollection = collection(firestore, 'pricing');
+            onSnapshot(pricingCollection, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'added' || change.type === 'modified') {
+                        const data = change.doc.data();
+                        if (data.type === 'priceUpdate') {
+                            document.getElementById('priceDisplay').innerText = `₱ ${data.price}`;
+                        } else if (data.type === 'clothesOnly') {
+                            const textList = document.getElementById('textList');
+                            const listItem = document.createElement('li');
+                            listItem.textContent = data.description;
+                            textList.appendChild(listItem);
+                        }
+                    }
+                });
+            });
+
+            const pricingCollection2 = collection(firestore, 'pricing2'); 
+            onSnapshot(pricingCollection2, (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                     if (change.type === 'added' || change.type === 'modified') {
+                         const data = change.doc.data();
+                         if (data.type === 'priceUpdate2') {
+                             document.getElementById('priceDisplay1').innerText = `₱ ${data.price}`;
+                         } else if (data.type === 'beddingsAndMore') {
+                            const textList2 = document.getElementById('textList1'); 
+                            const listItem = document.createElement('li');
+                            listItem.textContent = data.description;
+                            textList2.appendChild(listItem);
+                        }
+                     }
+                });
+            });
+
+        </script>
+
+    </body>
+</html>
