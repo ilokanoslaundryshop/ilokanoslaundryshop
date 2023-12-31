@@ -30,6 +30,18 @@
       .navbar .nav-link {
         color: #fff !important;
       }
+      .field-icon {
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 10px); 
+        cursor: pointer;
+      }
+      .form-outline {
+        position: relative;
+      }
+      .form-outline input {
+      padding-right: 30px; 
+      }
 
     </style>
     
@@ -69,10 +81,11 @@
                   <input type="email" id="email" class="form-control" required />
                   <label class="form-label" for="form1Example1">Email address</label>
                 </div>
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-4 position-relative">
                   <input type="password" id="password" class="form-control" required />
                   <label class="form-label" for="form1Example2">Password</label>
-                </div>             
+                  <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+              </div>                   
                 <div class="row mb-3">
                   <div class="col d-flex justify-content-center">                          
                   </div>           
@@ -121,22 +134,39 @@
   const auth = getAuth();
 
   document.getElementById("create").addEventListener("click", function() {
-		  var email =  document.getElementById("email").value;
-		  var password = document.getElementById("password").value;
-		  createUserWithEmailAndPassword(auth, email, password)
-		  .then((userCredential) => {
-		    const user = userCredential.user;
-		    console.log(user);
-		    alert("Registration Successfully");          
-       window.location.href = "index.html";                  
-		  })
-		  .catch((error) => {
-		    const errorCode = error.code;
-		    const errorMessage = error.message;		    
-		    console.log(errorMessage);
-		    alert(email+" is already exists");
-		  });		  		  
-	  });
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    
+    if (password.length < 6 || password.length > 8) {
+        alert("Password must be between 6 and 8 characters");
+        return;
+    }
+
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        alert("Registration Successfully");
+        window.location.href = "index.html";
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        alert(email + " is already exists");
+    });
+});
+
+function togglePassword() {
+    const passwordField = document.querySelector(this.getAttribute("toggle"));
+    this.classList.toggle("fa-eye-slash");
+    const fieldType = passwordField.getAttribute("type") === "password" ? "text" : "password";
+    passwordField.setAttribute("type", fieldType);
+}
+document.querySelectorAll(".toggle-password").forEach((icon) => {
+    icon.addEventListener("click", togglePassword);
+});
+
   </script>
   
 </html>
