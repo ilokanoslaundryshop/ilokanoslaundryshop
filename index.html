@@ -31,6 +31,18 @@
       .navbar .nav-link {
         color: #fff !important;
       }
+      .field-icon {
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 10px); 
+        cursor: pointer;
+      }
+      .form-outline {
+        position: relative;
+      }
+      .form-outline input {
+      padding-right: 30px; 
+      }
       
     </style>
 
@@ -53,9 +65,10 @@
                   <label class="form-label" for="form1Example1">Email address</label>
                 </div>               
                 <div class="form-outline mb-4">
-                  <input type="password" id="login_password" class="form-control"  required />
+                  <input type="password" id="login_password" class="form-control" required />
                   <label class="form-label" for="form1Example2">Password</label>
-                </div> 
+                  <span toggle="#login_password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+              </div>
                 <div class="row mb-lg-3">
                   <div class="col d-flex justify-content-center"> 
                     <div class="form-check ">
@@ -118,6 +131,7 @@
 <script type="module">
   
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
   import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
 
   const firebaseConfig = {
@@ -130,42 +144,98 @@
     measurementId: "G-EN4123PZX6"
   };
  
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
-  
-	  document.getElementById("login").addEventListener("click", function() {
-		  var email =  document.getElementById("login_email").value;
-		  var password = document.getElementById("login_password").value;
-		  signInWithEmailAndPassword(auth, email, password)
-		  .then((userCredential) => {		    
-		    const user = userCredential.user;
-		    console.log(user);
-		    alert("Login Successfully");        
-        window.location.href = "homepage.html";                  
-		  })
-		  .catch((error) => {
-		    const errorCode = error.code;
-		    const errorMessage = error.message;
-		    console.log(errorMessage);
-		    alert("Incorrect Password or Email / Not Existing");
-		  });		  		  
-	  });		
+  const firebaseConfig1 = {
+   apiKey: "AIzaSyAgVTkD5pkq3thtOrkqJ_9APQdDGXVFDn4",
+      authDomain: "appointment-firebase-81f05.firebaseapp.com",
+      projectId: "appointment-firebase-81f05",
+      storageBucket: "appointment-firebase-81f05.appspot.com",
+      messagingSenderId: "710162371059",
+      appId: "1:710162371059:web:6389f202e5e3a6c7c60286"
+};
 
-    document.getElementById("resetPass").addEventListener("click", function() {
-		  var email =  document.getElementById("login_reset").value;
-		  sendPasswordResetEmail(auth, email)
-		  .then((userCredential) => {		    
-		    const user = userCredential.user;
-		    console.log(user);
-		    alert("Please check your email");                     
-		  })
-		  .catch((error) => {
-		    const errorCode = error.code;
-		    const errorMessage = error.message;
-		    console.log(errorMessage);
-		    alert("We sent you an Email , please check to continue");
-		  });		  		  
-	  });	
+const app = initializeApp(firebaseConfig);
+const app1 = initializeApp(firebaseConfig1, "app1");
+
+const db = getFirestore(app1);
+const auth = getAuth(app);
+
+  const adminUsername = "admin";
+
+  document.getElementById("login").addEventListener("click", async function() {
+    var email =  document.getElementById("login_email").value;
+    var password = document.getElementById("login_password").value;
+
+    if (email === adminUsername) {
+        const storedAdminPassword = await getAdminPasswordFromFirestore();
+        if (!storedAdminPassword) {
+            const newPassword = prompt("Please set your password for the admin account:");
+            await setAdminPasswordInFirestore(newPassword);
+            alert("Password set successfully");
+        } else if (password === storedAdminPassword) {
+            alert("Login as admin successful");
+            window.location.href = "homepage.html";
+        } else {
+            alert("Incorrect Password for admin");
+        }
+    } else {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user);
+                alert("Login Successfully");
+                window.location.href = "homepage - Client.html";
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+                console.log(errorMessage);
+                alert("Incorrect Password or Email / Not Existing");
+            });
+    }
+});
+
+async function getAdminPasswordFromFirestore() {
+    const adminDocRef = doc(db, "adminPassword", adminUsername);
+    const adminDocSnapshot = await getDoc(adminDocRef);
+    
+    if (adminDocSnapshot.exists()) {
+        const adminData = adminDocSnapshot.data();
+        return adminData.password;
+    } else {
+        return null; 
+    }
+}
+
+async function setAdminPasswordInFirestore(newPassword) {
+    const adminDocRef = doc(db, "adminPassword", adminUsername);
+    await setDoc(adminDocRef, { password: newPassword });
+}
+
+document.getElementById("resetPass").addEventListener("click", function() {
+    var email =  document.getElementById("login_reset").value;
+    sendPasswordResetEmail(auth, email)
+    .then((userCredential) => {		    
+        const user = userCredential.user;
+        console.log(user);
+        alert("Please check your email");                     
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        alert("We sent you an Email, please check to continue");
+    });		  		  
+});	
+
+function togglePassword() {
+    const passwordField = document.querySelector(this.getAttribute("toggle"));
+    this.classList.toggle("fa-eye-slash");
+    const fieldType = passwordField.getAttribute("type") === "password" ? "text" : "password";
+    passwordField.setAttribute("type", fieldType);
+}
+
+document.querySelectorAll(".toggle-password").forEach((icon) => {
+    icon.addEventListener("click", togglePassword);
+});
 
 </script>
 
